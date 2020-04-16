@@ -17,7 +17,7 @@ user = {}
 # 违规用户名单
 warn_user = {}
 # 敏感词汇列表
-list_words = ["蔡徐坤", "鸡你太美", "傻逼", "傻吊"]
+list_words = ["蔡徐坤", "鸡你太美", "傻逼", "傻吊", "xxx"]
 
 
 # 处理进入聊天室
@@ -75,12 +75,13 @@ def del_civilized(s, name, text):
 # 处理聊天
 def do_chat(s, name, text):
     judge = do_judge(name, text)
-    if judge == 0:
+    if warn_user[name] >= 3:
         del_serious(s, name)
-    elif judge == 1:
-        del_warning(s, name)
-    elif judge == 2:
-        del_civilized(s, name, text)
+    else:
+        if judge == 1:
+            del_warning(s, name)
+        elif judge == 2:
+            del_civilized(s, name, text)
 
 
 # 处理退出
